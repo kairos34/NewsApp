@@ -1,4 +1,4 @@
-package com.android.ao.newsapp
+package com.android.ao.newsapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,8 +10,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.android.ao.newsapp.ui.theme.NewsAppTheme
+import com.android.ao.newsapp.presentation.theme.NewsAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * @author alper
+ * Created 25.07.2022
+ */
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
