@@ -13,12 +13,12 @@ import javax.inject.Inject
  * @author alper
  * Created 25.07.2022
  */
-class GetNewsUseCase @Inject constructor(
+class GetNewsListUseCase @Inject constructor(
     private val repository: NewsRepository
 ) {
     operator fun invoke(
         category: String,
-        query: String
+        query: String = ""
     ): Flow<Resource<List<News>>> = flow {
         try {
             emit(Resource.Loading())
