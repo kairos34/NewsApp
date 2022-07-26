@@ -1,21 +1,22 @@
 package com.android.ao.newsapp.presentation.news_detail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
-import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,8 +38,7 @@ fun NewsDetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .verticalScroll(rememberScrollState())
         ) {
             Card(elevation = 8.dp, modifier = Modifier
                 .fillMaxWidth()
@@ -101,12 +101,23 @@ fun NewsDetailScreen(
             )
             news.content?.let {
                 Text(
-                    text = it,
+                    text = viewModel.clearContent(it),
                     color = Color.Black,
                     modifier = Modifier
                         .padding(top = 8.dp, start = 8.dp, end = 8.dp),
                     fontSize = 22.sp,
                 )
             }
+            Text(
+                color = Color.Blue,
+                modifier = Modifier
+                    .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+                    .clickable {
+                        viewModel.openNewsWebsite(news.url)
+                    },
+                text = "Read more on ${news.source.name} website",
+                textDecoration = TextDecoration.Underline,
+                fontStyle = FontStyle.Italic
+            )
         }
 }
