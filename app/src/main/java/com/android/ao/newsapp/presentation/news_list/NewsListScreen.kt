@@ -8,7 +8,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.ao.newsapp.presentation.common.ErrorView
 import com.android.ao.newsapp.presentation.common.LoadingView
 import com.android.ao.newsapp.presentation.news_list.components.NewsListItem
@@ -22,7 +21,8 @@ import com.google.accompanist.pager.VerticalPager
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun NewsListScreen(
-    viewModel: NewsListViewModel = hiltViewModel()
+    viewModel: NewsListViewModel,
+    navigateToNewsDetail: (Int) -> Unit,
 ) {
     val newsListState by viewModel.newsListState.collectAsState()
 
@@ -33,7 +33,9 @@ fun NewsListScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 VerticalPager(count = it.size) { page ->
-                    NewsListItem(it[page])
+                    NewsListItem(it[page]) {
+                        navigateToNewsDetail.invoke(page)
+                    }
                 }
             }
         }

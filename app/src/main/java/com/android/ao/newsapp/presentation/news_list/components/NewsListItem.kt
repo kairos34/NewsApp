@@ -1,6 +1,7 @@
 package com.android.ao.newsapp.presentation.news_list.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -21,10 +22,14 @@ import com.android.ao.newsapp.data.model.News
  * Created 26.07.2022
  */
 @Composable
-fun NewsListItem(news: News) {
+fun NewsListItem(
+    news: News,
+    onItemClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxSize()
+            .clickable { onItemClick() }
     ) {
         NewsImageItem(news.urlToImage)
         Box(
