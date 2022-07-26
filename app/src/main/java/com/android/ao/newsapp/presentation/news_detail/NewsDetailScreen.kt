@@ -115,7 +115,7 @@ fun NewsDetailScreen(
                     .clickable {
                         viewModel.openNewsWebsite(news.url)
                     },
-                text = "Read more on ${news.source.name} website",
+                text = "Check more on ${news.source.name}...",
                 textDecoration = TextDecoration.Underline,
                 fontStyle = FontStyle.Italic
             )
