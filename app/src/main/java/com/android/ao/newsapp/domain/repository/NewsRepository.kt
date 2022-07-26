@@ -8,7 +8,7 @@ import com.android.ao.newsapp.data.model.NewsHeadlines
  */
 interface NewsRepository {
     suspend fun getNews(
-        country: String = "us",
+        country: String,
         category: String,
         query: String
     ): NewsHeadlines

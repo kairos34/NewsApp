@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.ao.newsapp.common.Resource
 import com.android.ao.newsapp.domain.usecases.GetNewsListUseCase
+import com.android.ao.newsapp.preferences.UserSettings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -14,18 +15,26 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class NewsListViewModel @Inject constructor(
-    private val getNewsListUseCase: GetNewsListUseCase
+    private val getNewsListUseCase: GetNewsListUseCase,
+    private val userSettings: UserSettings
 ) : ViewModel() {
 
     private val _newsListState = MutableStateFlow(NewsListState())
     val newsListState: StateFlow<NewsListState> = _newsListState.asStateFlow()
 
     init {
-        refresh()
+        refresh(userSettings.country)
+        listenCountry()
     }
 
-    fun refresh() {
-        getNewsListUseCase("general").onEach { newsListResult ->
+    private fun listenCountry() {
+        userSettings.countryStream.onEach { country ->
+            refresh(country)
+        }.launchIn(viewModelScope)
+    }
+
+    fun refresh(country: String? = null) {
+        getNewsListUseCase("general", country ?: userSettings.country).onEach { newsListResult ->
             when (newsListResult) {
                 is Resource.Success -> {
                     _newsListState.value = NewsListState(

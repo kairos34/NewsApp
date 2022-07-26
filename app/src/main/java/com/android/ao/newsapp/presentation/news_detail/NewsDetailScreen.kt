@@ -91,14 +91,16 @@ fun NewsDetailScreen(
                     )
                 }
             }
-            Text(
-                text = news.description,
-                color = MaterialTheme.colors.primaryVariant,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(top = 8.dp, start = 8.dp, end = 8.dp),
-                fontSize = 22.sp,
-            )
+            news.description?.let {
+                Text(
+                    text = it,
+                    color = MaterialTheme.colors.primaryVariant,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(top = 8.dp, start = 8.dp, end = 8.dp),
+                    fontSize = 22.sp,
+                )
+            }
             news.content?.let {
                 Text(
                     text = viewModel.clearContent(it),

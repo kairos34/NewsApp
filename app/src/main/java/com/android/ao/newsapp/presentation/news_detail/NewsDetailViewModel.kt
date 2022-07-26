@@ -17,6 +17,11 @@ class NewsDetailViewModel @Inject constructor(
     private val context: Application,
     private val parsePublishDate: ParsePublishDate
 ): AndroidViewModel(context) {
+
+    companion object {
+        private const val CHARS_PREFIX = "[+"
+    }
+
     fun parsePublishDate(date: String): String = parsePublishDate.invoke(date)
 
     fun openNewsWebsite(url: String) {
@@ -27,5 +32,7 @@ class NewsDetailViewModel @Inject constructor(
         )
     }
 
-    fun clearContent(content: String) = content.substring(0, content.lastIndexOf("[+"))
+    fun clearContent(content: String) = if (content.contains(CHARS_PREFIX)) {
+        content.substring(0, content.lastIndexOf(CHARS_PREFIX))
+    } else content
 }

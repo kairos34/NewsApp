@@ -4,16 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.android.ao.newsapp.navigation.NavGraph
+import com.android.ao.newsapp.navigation.TopApplicationBar
+import com.android.ao.newsapp.preferences.UserSettings
 import com.android.ao.newsapp.presentation.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * @author alper
@@ -21,13 +20,17 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var userSettings: UserSettings
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NewsAppTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background) {
+                Scaffold(modifier = Modifier.fillMaxSize(),
+                    topBar = { TopApplicationBar(userSettings) },
+                    backgroundColor = MaterialTheme.colors.background) {
                     val navController = rememberNavController()
                     NavGraph(navController)
                 }
