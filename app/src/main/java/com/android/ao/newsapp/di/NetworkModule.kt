@@ -7,6 +7,7 @@ import com.android.ao.newsapp.data.remote.NewsService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,7 +20,7 @@ import javax.inject.Singleton
  * Created 25.07.2022
  */
 @Module
-@InstallIn
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
