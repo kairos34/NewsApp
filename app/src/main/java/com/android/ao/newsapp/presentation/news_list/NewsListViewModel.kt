@@ -22,6 +22,12 @@ class NewsListViewModel @Inject constructor(
     private val _newsListState = MutableStateFlow(NewsListState())
     val newsListState: StateFlow<NewsListState> = _newsListState.asStateFlow()
 
+    companion object {
+        private const val DEFAULT_CATEGORY = "general"
+    }
+
+    private var selectedCategory = DEFAULT_CATEGORY
+
     init {
         refresh(userSettings.country)
         listenCountry()
@@ -33,8 +39,8 @@ class NewsListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun refresh(country: String? = null) {
-        getNewsListUseCase("general", country ?: userSettings.country).onEach { newsListResult ->
+    fun refresh(country: String? = null, category: String? = null) {
+        getNewsListUseCase(setAndGetCategory(category), country ?: userSettings.country).onEach { newsListResult ->
             when (newsListResult) {
                 is Resource.Success -> {
                     _newsListState.value = NewsListState(
@@ -52,4 +58,9 @@ class NewsListViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    private fun setAndGetCategory(category: String?) =
+        category?.apply {
+            selectedCategory = this
+        } ?: selectedCategory
 }

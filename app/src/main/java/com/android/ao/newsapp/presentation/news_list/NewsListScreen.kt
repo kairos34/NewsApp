@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.android.ao.newsapp.presentation.common.ErrorView
 import com.android.ao.newsapp.presentation.common.LoadingView
+import com.android.ao.newsapp.presentation.news_list.components.CategorySelectionScreen
 import com.android.ao.newsapp.presentation.news_list.components.NewsListItem
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
@@ -26,28 +27,33 @@ fun NewsListScreen(
 ) {
     val newsListState by viewModel.newsListState.collectAsState()
 
-    newsListState.news?.let {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CategorySelectionScreen { category ->
+                viewModel.refresh(
+                    category = category
+                )
+            }
+            newsListState.news?.let {
                 VerticalPager(count = it.size) { page ->
                     NewsListItem(it[page]) {
                         navigateToNewsDetail.invoke(page)
                     }
                 }
             }
+            if (newsListState.error.isNotBlank()) {
+                ErrorView(
+                    message = newsListState.error,
+                    onClickRetry = { viewModel.refresh() }
+                )
+            }
+            if (newsListState.isLoading) {
+                LoadingView()
+            }
         }
-    }
-    if (newsListState.error.isNotBlank()) {
-        ErrorView(
-            message = newsListState.error,
-            onClickRetry = { viewModel.refresh() }
-        )
-    }
-    if (newsListState.isLoading) {
-        LoadingView()
     }
 
 }
