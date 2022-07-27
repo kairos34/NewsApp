@@ -26,7 +26,7 @@ fun NewsImageItem(imageUrl: String?) {
                 .availableMemoryPercentage(0.25)
                 .build()
         },
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.FillBounds,
         modifier = Modifier.fillMaxSize(),
         shimmerParams = ShimmerParams(
             baseColor = MaterialTheme.colors.background,

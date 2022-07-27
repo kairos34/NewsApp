@@ -23,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import com.android.ao.newsapp.R
 import com.android.ao.newsapp.data.model.News
+import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.coil.CoilImage
 
@@ -64,13 +65,7 @@ fun NewsDetailScreen(
                         modifier = Modifier.height(250.dp).fillMaxWidth().padding(
                             top = 8.dp
                         ),
-                        shimmerParams = ShimmerParams(
-                            baseColor = MaterialTheme.colors.background,
-                            highlightColor = MaterialTheme.colors.primary,
-                            durationMillis = 500,
-                            dropOff = 0.65f,
-                            tilt = 20f
-                        ),
+                        circularReveal = CircularReveal(duration = 350),
                         error = ImageBitmap.imageResource(R.drawable.placeholder)
                     )
                     news.author?.let {
