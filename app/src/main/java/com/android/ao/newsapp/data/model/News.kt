@@ -1,5 +1,8 @@
 package com.android.ao.newsapp.data.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class News(
     val author: String?,
     val content: String?,
