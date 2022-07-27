@@ -84,7 +84,6 @@ fun NewsDetailScreen(
                     }
                     Text(
                         text = viewModel.parsePublishDate(news.publishedAt),
-                        color = MaterialTheme.colors.secondary,
                         modifier = Modifier
                             .padding(top = 6.dp),
                         fontSize = 16.sp,

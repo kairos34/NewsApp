@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,10 +38,12 @@ fun CountryDialog(onDismiss: () -> Unit, onCountrySelected: (String) -> Unit) {
             onDismiss()
         },
     ) {
+        val configuration = LocalConfiguration.current
+        val dialogHeight = configuration.screenHeightDp.dp / 2
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp),
+                .height(dialogHeight),
             elevation = 4.dp,
             shape = RoundedCornerShape(12.dp)
         ) {
@@ -52,7 +54,7 @@ fun CountryDialog(onDismiss: () -> Unit, onCountrySelected: (String) -> Unit) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(MaterialTheme.colors.secondary)
+                        .background(MaterialTheme.colors.primary)
                 ) {
                     Text(
                         modifier = Modifier.padding(top = 16.dp, bottom = 16.dp).align(Center),
@@ -60,6 +62,7 @@ fun CountryDialog(onDismiss: () -> Unit, onCountrySelected: (String) -> Unit) {
                         textAlign = TextAlign.Center,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colors.onPrimary
                     )
                 }
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -69,7 +72,6 @@ fun CountryDialog(onDismiss: () -> Unit, onCountrySelected: (String) -> Unit) {
                             onDismiss()
                         }, modifier = Modifier.fillMaxWidth()) {
                             Text(
-                                color = Color.White,
                                 modifier = Modifier.padding(bottom = 8.dp),
                                 text = Locale("", availableSources[index]).displayCountry,
                                 textAlign = TextAlign.Center,

@@ -47,12 +47,12 @@ fun NewsListItem(
         ) {
             Text(
                 text = news.title,
-                color = MaterialTheme.colors.surface,
+                color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .padding(
-                        start = 24.dp,
-                        end = 24.dp,
+                        start = 8.dp,
+                        end = 8.dp,
                         bottom = 40.dp
                     ),
                 style = MaterialTheme.typography.h6.copy(
@@ -61,11 +61,11 @@ fun NewsListItem(
             )
             Text(
                 text = news.source.name,
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colors.primaryVariant,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .padding(
-                        start = 24.dp,
+                        start = 8.dp,
                         bottom = 6.dp
                     ),
                 style = MaterialTheme.typography.h6.copy(
