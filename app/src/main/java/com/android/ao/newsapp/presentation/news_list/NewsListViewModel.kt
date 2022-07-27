@@ -22,11 +22,11 @@ class NewsListViewModel @Inject constructor(
     private val _newsListState = MutableStateFlow(NewsListState())
     val newsListState: StateFlow<NewsListState> = _newsListState.asStateFlow()
 
-    companion object {
-        private const val DEFAULT_CATEGORY = "general"
-    }
+    private val _categoryState = MutableStateFlow("general")
+    val categoryState: StateFlow<String> = _categoryState.asStateFlow()
 
-    private var selectedCategory = DEFAULT_CATEGORY
+    private val _queryState = MutableStateFlow("")
+    val queryState: StateFlow<String> = _queryState.asStateFlow()
 
     init {
         refresh(userSettings.country)
@@ -39,8 +39,12 @@ class NewsListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun refresh(country: String? = null, category: String? = null) {
-        getNewsListUseCase(setAndGetCategory(category), country ?: userSettings.country).onEach { newsListResult ->
+    fun refresh(country: String? = null, category: String? = null, query: String? = null) {
+        getNewsListUseCase(
+            setAndGetCategory(category),
+            country ?: userSettings.country,
+            setAndGetQuery(query)
+        ).onEach { newsListResult ->
             when (newsListResult) {
                 is Resource.Success -> {
                     _newsListState.value = NewsListState(
@@ -61,6 +65,11 @@ class NewsListViewModel @Inject constructor(
 
     private fun setAndGetCategory(category: String?) =
         category?.apply {
-            selectedCategory = this
-        } ?: selectedCategory
+            _categoryState.value = this
+        } ?: _categoryState.value
+
+    private fun setAndGetQuery(query: String?) =
+        query?.apply {
+            _queryState.value = this
+        } ?: _queryState.value
 }

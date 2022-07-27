@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NewsAppTheme {
-                // A surface container using the 'background' color from the theme
                 Scaffold(modifier = Modifier.fillMaxSize(),
                     topBar = { TopApplicationBar(userSettings) },
                     backgroundColor = MaterialTheme.colors.background) {

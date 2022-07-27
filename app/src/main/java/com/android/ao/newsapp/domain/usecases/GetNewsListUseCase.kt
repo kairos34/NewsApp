@@ -19,7 +19,7 @@ class GetNewsListUseCase @Inject constructor(
     operator fun invoke(
         category: String,
         country: String,
-        query: String = ""
+        query: String
     ): Flow<Resource<List<News>>> = flow {
         try {
             emit(Resource.Loading())

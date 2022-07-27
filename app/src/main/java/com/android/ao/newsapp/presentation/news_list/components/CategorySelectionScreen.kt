@@ -3,15 +3,12 @@ package com.android.ao.newsapp.presentation.news_list.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.toUpperCase
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import java.util.*
 
@@ -21,6 +18,7 @@ import java.util.*
  */
 @Composable
 fun CategorySelectionScreen(
+    selectedCategory: State<String>,
     onCategorySelected: (String) -> Unit
 ) {
     val categories = listOf(
@@ -44,7 +42,13 @@ fun CategorySelectionScreen(
                     end = 8.dp,
                     top = 16.dp,
                     bottom = 16.dp
-                )
+                ),
+                colors = ButtonDefaults.buttonColors(backgroundColor =
+                if (selectedCategory.value == category) {
+                    Color.Yellow
+                } else {
+                    MaterialTheme.colors.primary
+                })
             ) {
                 Text(category.uppercase(Locale("en", "US")))
             }

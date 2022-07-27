@@ -30,7 +30,7 @@ fun NewsImageItem(imageUrl: String?) {
         modifier = Modifier.fillMaxSize(),
         shimmerParams = ShimmerParams(
             baseColor = MaterialTheme.colors.background,
-            highlightColor = MaterialTheme.colors.onSurface,
+            highlightColor = MaterialTheme.colors.primary,
             durationMillis = 500,
             dropOff = 0.65f,
             tilt = 20f

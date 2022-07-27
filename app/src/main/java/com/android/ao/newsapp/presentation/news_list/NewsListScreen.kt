@@ -1,17 +1,14 @@
 package com.android.ao.newsapp.presentation.news_list
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.android.ao.newsapp.presentation.common.ErrorView
 import com.android.ao.newsapp.presentation.common.LoadingView
 import com.android.ao.newsapp.presentation.news_list.components.CategorySelectionScreen
 import com.android.ao.newsapp.presentation.news_list.components.NewsListItem
+import com.android.ao.newsapp.presentation.news_list.components.SearchBar
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
 
@@ -32,9 +29,14 @@ fun NewsListScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CategorySelectionScreen { category ->
+            CategorySelectionScreen(viewModel.categoryState.collectAsState()) { category ->
                 viewModel.refresh(
                     category = category
+                )
+            }
+            SearchBar(viewModel.queryState.collectAsState()) { query ->
+                viewModel.refresh(
+                    query = query
                 )
             }
             newsListState.news?.let {

@@ -1,6 +1,5 @@
 package com.android.ao.newsapp.navigation
 
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel

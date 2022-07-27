@@ -52,11 +52,12 @@ fun TopApplicationBar(userSettings: UserSettings) {
         }
 
         if (openDialog) {
-            CountryDialog(onDismiss =  {
+            CountryDialog(userSettings.countryStream.collectAsState(),
+            onDismiss =  {
                 openDialog = false
-            }, onCountrySelected = {
+            }) {
                 userSettings.country = it
-            })
+            }
         }
     }
 }

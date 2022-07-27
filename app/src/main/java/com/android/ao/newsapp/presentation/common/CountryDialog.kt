@@ -6,9 +6,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,7 +24,11 @@ import java.util.*
  * Created 26.07.2022
  */
 @Composable
-fun CountryDialog(onDismiss: () -> Unit, onCountrySelected: (String) -> Unit) {
+fun CountryDialog(
+    selectedCountry: State<String>,
+    onDismiss: () -> Unit,
+    onCountrySelected: (String) -> Unit
+) {
 
     val availableSources = listOf(
         "ae", "ar", "at", "au", "be", "bg", "br", "ca",
@@ -70,7 +76,15 @@ fun CountryDialog(onDismiss: () -> Unit, onCountrySelected: (String) -> Unit) {
                         TextButton(onClick = {
                             onCountrySelected(availableSources[index])
                             onDismiss()
-                        }, modifier = Modifier.fillMaxWidth()) {
+                        }, modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(backgroundColor =
+                                if (selectedCountry.value == availableSources[index]) {
+                                    Color.Yellow
+                                } else {
+                                    Color.White
+                                }
+                            )
+                        ) {
                             Text(
                                 modifier = Modifier.padding(bottom = 8.dp),
                                 text = Locale("", availableSources[index]).displayCountry,
