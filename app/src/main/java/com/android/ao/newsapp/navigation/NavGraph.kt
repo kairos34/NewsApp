@@ -10,6 +10,7 @@ import com.android.ao.newsapp.common.Constants
 import com.android.ao.newsapp.presentation.news_detail.NewsDetailScreen
 import com.android.ao.newsapp.presentation.news_list.NewsListScreen
 import com.android.ao.newsapp.presentation.news_list.NewsListViewModel
+import com.android.ao.newsapp.presentation.splash.SplashScreen
 
 /**
  * @author alper
@@ -21,8 +22,19 @@ fun NavGraph(navController: NavHostController,
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.NewsListScreen.route,
+        startDestination = Screen.SplashScreen.route,
     ) {
+        composable(
+            route = Screen.SplashScreen.route
+        ) {
+            SplashScreen {
+                navController.navigate(Screen.NewsListScreen.route) {
+                    popUpTo(Screen.SplashScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
         composable(route = Screen.NewsListScreen.route) {
             NewsListScreen(newsListViewModel) {
                 navController.navigate(Screen.NewsDetailScreen.route + "/${it}")

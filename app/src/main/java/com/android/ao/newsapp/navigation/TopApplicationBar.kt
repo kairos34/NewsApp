@@ -1,5 +1,6 @@
 package com.android.ao.newsapp.navigation
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -20,43 +21,49 @@ import java.util.*
  * Created 26.07.2022
  */
 @Composable
-fun TopApplicationBar(userSettings: UserSettings) {
-    TopAppBar(
-        backgroundColor = MaterialTheme.colors.secondary,
+fun TopApplicationBar(userSettings: UserSettings, topBarState: MutableState<Boolean>) {
+
+    AnimatedVisibility(
+        visible = topBarState.value,
     ) {
-
-        var openDialog by remember {
-            mutableStateOf(false)
-        }
-
-        Text(
-            text = Locale("", userSettings.country).displayCountry, style = MaterialTheme.typography.h6.copy(
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            ),
-            modifier = Modifier.padding(start = 4.dp),
-            color = MaterialTheme.colors.onPrimary
-        )
-        Row(
-            modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.End
+        TopAppBar(
+            backgroundColor = MaterialTheme.colors.secondary,
         ) {
-            IconButton(onClick = {
-                openDialog = true
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Set source",
-                )
-            }
-        }
 
-        if (openDialog) {
-            CountryDialog(userSettings.countryStream.collectAsState(),
-            onDismiss =  {
-                openDialog = false
-            }) {
-                userSettings.country = it
+            var openDialog by remember {
+                mutableStateOf(false)
+            }
+
+            Text(
+                text = Locale("", userSettings.country).displayCountry,
+                style = MaterialTheme.typography.h6.copy(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier.padding(start = 4.dp),
+                color = MaterialTheme.colors.onPrimary
+            )
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.End
+            ) {
+                IconButton(onClick = {
+                    openDialog = true
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = "Set source",
+                    )
+                }
+            }
+
+            if (openDialog) {
+                CountryDialog(userSettings.countryStream.collectAsState(),
+                    onDismiss = {
+                        openDialog = false
+                    }) {
+                    userSettings.country = it
+                }
             }
         }
     }
